@@ -143,10 +143,13 @@ namespace DG.Tweening
         /// <param name="logBehaviour">Type of logging to use.
         /// You can change this setting at any time by changing the static <see cref="DOTween.logBehaviour"/> property.
         /// <para>Default: ErrorsOnly</para></param>
-        public static IDOTweenInit Init(bool? recycleAllByDefault = null, bool? useSafeMode = null, LogBehaviour? logBehaviour = null)
+        public static IDOTweenInit Init(bool? recycleAllByDefault = null, bool? useSafeMode = null, LogBehaviour? logBehaviour = null, bool force = false)
         {
-            if (initialized) return instance;
-            if (!Application.isPlaying || isQuitting) return null;
+			if (!force)
+			{
+				if (initialized) return instance;
+				if (!Application.isPlaying || isQuitting) return null;
+			}
 
             DOTweenSettings settings = Resources.Load(DOTweenSettings.AssetName) as DOTweenSettings;
             return Init(settings, recycleAllByDefault, useSafeMode, logBehaviour);

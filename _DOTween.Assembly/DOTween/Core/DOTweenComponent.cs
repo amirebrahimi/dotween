@@ -15,6 +15,7 @@ namespace DG.Tweening.Core
     /// Contains all instance-based methods
     /// </summary>
     [AddComponentMenu("")]
+    [ExecuteInEditMode]
     public class DOTweenComponent : MonoBehaviour, IDOTweenInit
     {
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
@@ -174,10 +175,12 @@ namespace DG.Tweening.Core
 
         internal static void Create()
         {
+
             if (DOTween.instance != null) return;
 
             GameObject go = new GameObject("[DOTween]");
-            DontDestroyOnLoad(go);
+			if (Application.isPlaying)
+				DontDestroyOnLoad(go);
             DOTween.instance = go.AddComponent<DOTweenComponent>();
         }
 
